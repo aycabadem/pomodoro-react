@@ -16,8 +16,6 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [mode, setMode] = useState("work");
-  const [startBreak, setStartBreak] = useState(false);
-  const [startWork, setStartWork] = useState(false);
 
   const workMinutes = useSelector(
     (state: RootState) => state.settings.workMinutes
@@ -58,10 +56,8 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
 
   const handlePlayButtonClick = () => {
     if (mode === "break") {
-      setStartBreak(true);
       setIsPaused(false);
     } else {
-      setStartWork(true);
       setIsPaused(false);
     }
   };
@@ -69,12 +65,6 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   const handlePauseButtonClick = () => {
     setIsPaused(true);
   };
-  useEffect(() => {
-    if (startWork) {
-      setIsPaused(false);
-      setStartWork(false);
-    }
-  }, [startWork]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
