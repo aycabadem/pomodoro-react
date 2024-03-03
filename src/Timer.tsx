@@ -16,6 +16,8 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [mode, setMode] = useState("work");
+  const [startBreak, setStartBreak] = useState(false);
+  const [startWork, setStartWork] = useState(false);
 
   const workMinutes = useSelector(
     (state: RootState) => state.settings.workMinutes
@@ -41,6 +43,8 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
         setSecondsLeft((prevSecondsLeft) => {
           if (prevSecondsLeft === 0) {
             switchMode();
+            clearInterval(interval);
+            setIsPaused(true);
             return prevSecondsLeft;
           }
           return prevSecondsLeft - 1;
@@ -52,11 +56,40 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  const handlePlayButtonClick = () => {
+    if (mode === "break") {
+      setStartBreak(true);
+      setIsPaused(false);
+    } else {
+      setStartWork(true);
+      setIsPaused(false);
+    }
+  };
+
+  const handlePauseButtonClick = () => {
+    setIsPaused(true);
+  };
+  useEffect(() => {
+    if (startWork) {
+      setIsPaused(false);
+      setStartWork(false);
+    }
+  }, [startWork]);
+
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
   const formattedTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   return (
     <div>
+      <div
+        style={{
+          fontSize: "36px",
+          marginBottom: "20px",
+          textTransform: "capitalize",
+        }}
+      >
+        {mode}
+      </div>
       <div>
         <CircularProgressbar
           value={((workMinutes * 60 - secondsLeft) / (workMinutes * 60)) * 100}
@@ -70,9 +103,9 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
       </div>
       <div style={{ marginTop: "20px" }}>
         {isPaused ? (
-          <PlayButton onClick={() => setIsPaused(false)} />
+          <PlayButton onClick={handlePlayButtonClick} />
         ) : (
-          <PauseButton onClick={() => setIsPaused(true)} />
+          <PauseButton onClick={handlePauseButtonClick} />
         )}
       </div>
       <div style={{ marginTop: "20px" }}>
