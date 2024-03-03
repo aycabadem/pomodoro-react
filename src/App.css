@@ -17,7 +17,14 @@ body{
   width: 100px;
   cursor: pointer;
  }
-
+ button.with-text{
+  width: 36px;
+  float: left;
+  margin: 5px;
+ }
  label{
   display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-transform: capitalize;
  }
