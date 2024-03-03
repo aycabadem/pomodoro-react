@@ -4,8 +4,12 @@ import "./Slider.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setWorkMinutes, setBreakMinutes } from "./redux/settingsSlice";
 import { RootState } from "./redux/store";
+import BackButton from "./BackButton";
+interface SettingsProps {
+  onBackButtonClick: () => void;
+}
 
-const Settings = () => {
+const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
   const dispatch = useDispatch();
   const workMinutes = useSelector(
     (state: RootState) => state.settings.workMinutes
@@ -36,6 +40,14 @@ const Settings = () => {
         max={100}
         onChange={(value) => dispatch(setBreakMinutes(value as number))}
       ></ReactSlider>
+      <div
+        style={{
+          textAlign: "center",
+          marginTop: "20px",
+        }}
+      >
+        <BackButton onClick={onBackButtonClick} />
+      </div>
     </div>
   );
 };

@@ -5,9 +5,24 @@ import Timer from "./Timer";
 import Settings from "./Settings";
 
 function App() {
-  const [showSettings, setShowSettings] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+  const handleSettingsButtonClick = () => {
+    setShowSettings(!showSettings);
+  };
 
-  return <div className="App">{showSettings ? <Settings /> : <Timer />}</div>;
+  const handleBackButtonClick = () => {
+    setShowSettings(!showSettings);
+  };
+
+  return (
+    <div className="App">
+      {showSettings ? (
+        <Settings onBackButtonClick={handleBackButtonClick} />
+      ) : (
+        <Timer onSettingsButtonClick={handleSettingsButtonClick} />
+      )}
+    </div>
+  );
 }
 
 export default App;
