@@ -33,17 +33,18 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   const audio = new Audio(audio1);
 
   function switchMode() {
-    let nextMode = "work";
+    let nextMode = " short break";
     if (mode === "work") {
-      nextMode = currentRound === rounds ? "longBreak" : "break";
+      nextMode = currentRound === rounds ? "long break" : "short break";
+
       setSecondsLeft(
-        nextMode === "break" ? breakMinutes * 60 : longBreakMinutes * 60
+        nextMode === "short break" ? breakMinutes * 60 : longBreakMinutes * 60
       );
-      setCurrentRound((prevRound) => prevRound + 1);
-    } else if (mode === "break") {
+      setCurrentRound(currentRound + 1);
+    } else if (mode === "short break") {
       nextMode = "work";
       setSecondsLeft(workMinutes * 60);
-    } else if (mode === "longBreak") {
+    } else if (mode === "long break") {
       nextMode = "work";
       setSecondsLeft(workMinutes * 60);
       setCurrentRound(1);

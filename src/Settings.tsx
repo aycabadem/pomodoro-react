@@ -51,7 +51,7 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         thumbClassName={"thumb"}
         trackClassName={"track"}
         value={workMinutes}
-        min={1}
+        min={0.1}
         max={100}
         onChange={(value) => dispatch(setWorkMinutes(value as number))}
       ></ReactSlider>
@@ -62,7 +62,7 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         thumbClassName={"thumb"}
         trackClassName={"track"}
         value={breakMinutes}
-        min={1}
+        min={0.1}
         max={100}
         onChange={(value) => dispatch(setBreakMinutes(value as number))}
       ></ReactSlider>
@@ -72,7 +72,7 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         thumbClassName={"thumb"}
         trackClassName={"track"}
         value={longBreakMinutes}
-        min={1}
+        min={0.1}
         max={100}
         onChange={(value) => dispatch(setLongBreakMinutes(value as number))}
       ></ReactSlider>
