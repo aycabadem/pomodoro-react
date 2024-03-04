@@ -28,3 +28,6 @@ body{
   margin-top: 10px;
   text-transform: capitalize;
  }
+ option{
+  color: white;
+ }

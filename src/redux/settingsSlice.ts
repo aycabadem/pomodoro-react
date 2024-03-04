@@ -13,7 +13,7 @@ const initialState: SettingsState = {
   breakMinutes: 5,
   longBreakMinutes: 20,
   rounds: 4,
-  soundFile: "",
+  soundFile: "./sound.wav",
 };
 
 const settingsSlice = createSlice({

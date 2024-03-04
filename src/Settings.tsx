@@ -11,6 +11,7 @@ import {
 } from "./redux/settingsSlice";
 import { RootState } from "./redux/store";
 import BackButton from "./BackButton";
+
 interface SettingsProps {
   onBackButtonClick: () => void;
 }
@@ -28,6 +29,7 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
     (state: RootState) => state.settings.longBreakMinutes
   );
   const rounds = useSelector((state: RootState) => state.settings.rounds);
+  const soundFile = useSelector((state: RootState) => state.settings.soundFile);
 
   const handleSoundFileChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -35,6 +37,10 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
     const selectedFile = event.target.value;
     setSelectedSoundFile(selectedFile);
     dispatch(setSoundFile(selectedFile));
+
+    const audio1 = require(`./audio${soundFile.substring(1)}`);
+    const audio = new Audio(audio1);
+    audio.play();
   };
   const audioFiles = require.context("./audio", false, /\.(wav)$/).keys();
   return (
@@ -81,9 +87,22 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         onChange={(value) => dispatch(setRounds(value as number))}
       ></ReactSlider>
       <div>
-        <label>Select Sound File:</label>
-        <select value={selectedSoundFile} onChange={handleSoundFileChange}>
-          <option value="">Select a sound file</option>
+        <label>Select Sound File: {selectedSoundFile}</label>
+        <select
+          style={{
+            textAlign: "center",
+            backgroundColor: "white",
+            width: "340px",
+            borderRadius: "20px",
+            height: "40px",
+            textDecorationColor: "white",
+          }}
+          value={selectedSoundFile}
+          onChange={handleSoundFileChange}
+        >
+          <option style={{ color: "white" }} value="">
+            Select a sound file
+          </option>
           {audioFiles.map((fileName: string) => (
             <option key={fileName} value={fileName}>
               {fileName}
