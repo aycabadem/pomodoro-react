@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactSlider from "react-slider";
 import "./Slider.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import {
   setBreakMinutes,
   setLongBreakMinutes,
   setRounds,
+  setSoundFile,
 } from "./redux/settingsSlice";
 import { RootState } from "./redux/store";
 import BackButton from "./BackButton";
@@ -16,6 +17,7 @@ interface SettingsProps {
 
 const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
   const dispatch = useDispatch();
+  const [selectedSoundFile, setSelectedSoundFile] = useState<string>("");
   const workMinutes = useSelector(
     (state: RootState) => state.settings.workMinutes
   );
@@ -26,6 +28,15 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
     (state: RootState) => state.settings.longBreakMinutes
   );
   const rounds = useSelector((state: RootState) => state.settings.rounds);
+
+  const handleSoundFileChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedFile = event.target.value;
+    setSelectedSoundFile(selectedFile);
+    dispatch(setSoundFile(selectedFile));
+  };
+  const audioFiles = require.context("./audio", false, /\.(wav)$/).keys();
   return (
     <div style={{ textAlign: "center" }}>
       <label>Work min: {workMinutes} </label>
@@ -69,6 +80,17 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         max={15}
         onChange={(value) => dispatch(setRounds(value as number))}
       ></ReactSlider>
+      <div>
+        <label>Select Sound File:</label>
+        <select value={selectedSoundFile} onChange={handleSoundFileChange}>
+          <option value="">Select a sound file</option>
+          {audioFiles.map((fileName: string) => (
+            <option key={fileName} value={fileName}>
+              {fileName}
+            </option>
+          ))}
+        </select>
+      </div>
       <div
         style={{
           textAlign: "center",

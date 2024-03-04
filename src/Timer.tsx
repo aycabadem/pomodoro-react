@@ -16,23 +16,47 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [mode, setMode] = useState("work");
-
+  const [currentRound, setCurrentRound] = useState(1);
+  const rounds = useSelector((state: RootState) => state.settings.rounds);
   const workMinutes = useSelector(
     (state: RootState) => state.settings.workMinutes
   );
   const breakMinutes = useSelector(
     (state: RootState) => state.settings.breakMinutes
   );
+  const longBreakMinutes = useSelector(
+    (state: RootState) => state.settings.longBreakMinutes
+  );
+  const soundFile = useSelector((state: RootState) => state.settings.soundFile);
+
+  const audio1 = require(`./audio${soundFile.substring(1)}`);
+  const audio = new Audio(audio1);
 
   function switchMode() {
-    const nextMode = mode === "work" ? "break" : "work";
+    const nextMode =
+      mode === "work"
+        ? "break"
+        : mode === "break" && currentRound < rounds
+        ? "work"
+        : currentRound === rounds
+        ? "longBreak"
+        : "work";
     setMode(nextMode);
-    setSecondsLeft(nextMode === "work" ? workMinutes * 60 : breakMinutes * 60);
+    if (nextMode === "work") {
+      setSecondsLeft(workMinutes * 60);
+      setCurrentRound((prevRound) => prevRound + 1);
+    } else if (nextMode === "break") {
+      setSecondsLeft(breakMinutes * 60);
+    } else if (nextMode === "longBreak") {
+      setSecondsLeft(longBreakMinutes * 60);
+      setCurrentRound(1);
+    }
+    audio.play();
   }
 
   useEffect(() => {
     setSecondsLeft(workMinutes * 60);
-  }, [workMinutes, breakMinutes]);
+  }, [workMinutes, breakMinutes, longBreakMinutes]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -52,14 +76,10 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, mode, currentRound]);
 
   const handlePlayButtonClick = () => {
-    if (mode === "break") {
-      setIsPaused(false);
-    } else {
-      setIsPaused(false);
-    }
+    setIsPaused(false);
   };
 
   const handlePauseButtonClick = () => {
@@ -82,7 +102,22 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
       </div>
       <div>
         <CircularProgressbar
-          value={((workMinutes * 60 - secondsLeft) / (workMinutes * 60)) * 100}
+          value={
+            (((mode === "work"
+              ? workMinutes
+              : mode === "break"
+              ? breakMinutes
+              : longBreakMinutes) *
+              60 -
+              secondsLeft) /
+              ((mode === "work"
+                ? workMinutes
+                : mode === "break"
+                ? breakMinutes
+                : longBreakMinutes) *
+                60)) *
+            100
+          }
           text={formattedTime}
           styles={buildStyles({
             trailColor: colors.softWhite,

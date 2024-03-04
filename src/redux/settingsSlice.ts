@@ -5,6 +5,7 @@ interface SettingsState {
   breakMinutes: number;
   longBreakMinutes: number;
   rounds: number;
+  soundFile: string;
 }
 
 const initialState: SettingsState = {
@@ -12,6 +13,7 @@ const initialState: SettingsState = {
   breakMinutes: 5,
   longBreakMinutes: 20,
   rounds: 4,
+  soundFile: "",
 };
 
 const settingsSlice = createSlice({
@@ -30,6 +32,9 @@ const settingsSlice = createSlice({
     setRounds(state, action: PayloadAction<number>) {
       state.rounds = action.payload;
     },
+    setSoundFile(state, action: PayloadAction<string>) {
+      state.soundFile = action.payload;
+    },
   },
 });
 
@@ -38,6 +43,7 @@ export const {
   setBreakMinutes,
   setLongBreakMinutes,
   setRounds,
+  setSoundFile,
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;
