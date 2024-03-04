@@ -7,6 +7,7 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
+import RestartButton from "./RestartButton";
 
 interface TimerProps {
   onSettingsButtonClick: () => void;
@@ -85,6 +86,13 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
     setIsPaused(true);
   };
 
+  const handleRestartButton = () => {
+    setMode("work");
+    setSecondsLeft(workMinutes * 60);
+    setCurrentRound(1);
+    setIsPaused(true);
+  };
+
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
   const formattedTime = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
@@ -131,6 +139,7 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
         ) : (
           <PauseButton onClick={handlePauseButtonClick} />
         )}
+        <RestartButton onClick={handleRestartButton} />
       </div>
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={onSettingsButtonClick} />
