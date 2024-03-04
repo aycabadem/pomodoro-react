@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import colors from "./colors";
-import { PlayButton } from "./PlayButton";
-import PauseButton from "./PauseButton";
-import SettingsButton from "./SettingsButton";
+import colors from "../../constants/colors";
+import { PlayButton } from "../buttons/PlayButton";
+import PauseButton from "../buttons/PauseButton";
+import SettingsButton from "../buttons/SettingsButton";
 import { useSelector } from "react-redux";
-import { RootState } from "./redux/store";
-import RestartButton from "./RestartButton";
+import { RootState } from "../../redux/store";
+import RestartButton from "../buttons/RestartButton";
 
 interface TimerProps {
   onSettingsButtonClick: () => void;
@@ -30,7 +30,7 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   );
   const soundFile = useSelector((state: RootState) => state.settings.soundFile);
 
-  const audio1 = require(`./audio${soundFile.substring(1)}`);
+  const audio1 = require(`../../audio${soundFile.substring(1)}`);
   const audio = new Audio(audio1);
 
   function switchMode() {

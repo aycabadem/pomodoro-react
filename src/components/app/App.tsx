@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import "./App.css";
-import Timer from "./Timer";
-import Settings from "./Settings";
+import Timer from "../timer/Timer";
+import Settings from "../settings/Settings";
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);

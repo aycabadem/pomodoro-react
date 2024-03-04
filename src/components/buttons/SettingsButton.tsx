@@ -6,7 +6,7 @@ interface SettingsButtonProps {
 
 const SettingsButton: React.FC<SettingsButtonProps> = (props) => {
   return (
-    <button onClick={props.onClick}>
+    <button onClick={props.onClick} data-testid="settings-button">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

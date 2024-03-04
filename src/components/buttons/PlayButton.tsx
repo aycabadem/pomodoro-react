@@ -4,7 +4,7 @@ interface PlayButtonProps {
 }
 export const PlayButton: React.FC<PlayButtonProps> = (props) => {
   return (
-    <button onClick={props.onClick}>
+    <button onClick={props.onClick} data-testid="play-button">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

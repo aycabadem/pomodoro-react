@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactSlider from "react-slider";
-import "./Slider.css";
+import "../common/Slider.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setWorkMinutes,
@@ -8,9 +8,9 @@ import {
   setLongBreakMinutes,
   setRounds,
   setSoundFile,
-} from "./redux/settingsSlice";
-import { RootState } from "./redux/store";
-import BackButton from "./BackButton";
+} from "../../redux/settingsSlice";
+import { RootState } from "../../redux/store";
+import BackButton from "../buttons/BackButton";
 
 interface SettingsProps {
   onBackButtonClick: () => void;
@@ -38,11 +38,11 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
     setSelectedSoundFile(selectedFile);
     dispatch(setSoundFile(selectedFile));
 
-    const audio1 = require(`./audio${soundFile.substring(1)}`);
+    const audio1 = require(`../../audio${soundFile.substring(1)}`);
     const audio = new Audio(audio1);
     audio.play();
   };
-  const audioFiles = require.context("./audio", false, /\.(wav)$/).keys();
+  const audioFiles = require.context("../../audio", false, /\.(wav)$/).keys();
   return (
     <div style={{ textAlign: "center" }}>
       <label>Work min: {workMinutes} </label>
