@@ -21,7 +21,7 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     setWorkMinutes(state, action: PayloadAction<number>) {
-      state.workMinutes = action.payload;
+      state.workMinutes = Math.round(action.payload);
     },
     setBreakMinutes(state, action: PayloadAction<number>) {
       state.breakMinutes = action.payload;

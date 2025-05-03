@@ -53,7 +53,9 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         value={workMinutes}
         min={0.1}
         max={100}
-        onChange={(value) => dispatch(setWorkMinutes(value as number))}
+        onChange={(value) =>
+          dispatch(setWorkMinutes(Math.round(value as number)))
+        }
       ></ReactSlider>
 
       <label>Short Break min: {breakMinutes} </label>
@@ -64,7 +66,9 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         value={breakMinutes}
         min={0.1}
         max={100}
-        onChange={(value) => dispatch(setBreakMinutes(value as number))}
+        onChange={(value) =>
+          dispatch(setBreakMinutes(Math.round(value as number)))
+        }
       ></ReactSlider>
       <label>Long Break min: {longBreakMinutes} </label>
       <ReactSlider
@@ -74,7 +78,9 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         value={longBreakMinutes}
         min={0.1}
         max={100}
-        onChange={(value) => dispatch(setLongBreakMinutes(value as number))}
+        onChange={(value) =>
+          dispatch(setLongBreakMinutes(Math.round(value as number)))
+        }
       ></ReactSlider>
       <label>Rounds: {rounds} </label>
       <ReactSlider
@@ -84,7 +90,7 @@ const Settings: React.FC<SettingsProps> = ({ onBackButtonClick }) => {
         value={rounds}
         min={2}
         max={15}
-        onChange={(value) => dispatch(setRounds(value as number))}
+        onChange={(value) => dispatch(setRounds(Math.round(value as number)))}
       ></ReactSlider>
       <div>
         <label>Select Sound File: {selectedSoundFile}</label>

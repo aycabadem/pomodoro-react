@@ -39,15 +39,17 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
       nextMode = currentRound === rounds ? "long break" : "short break";
 
       setSecondsLeft(
-        nextMode === "short break" ? breakMinutes * 60 : longBreakMinutes * 60
+        nextMode === "short break"
+          ? Math.round(breakMinutes) * 60
+          : Math.round(longBreakMinutes) * 60
       );
       setCurrentRound(currentRound + 1);
     } else if (mode === "short break") {
       nextMode = "work";
-      setSecondsLeft(workMinutes * 60);
+      setSecondsLeft(Math.round(workMinutes) * 60);
     } else if (mode === "long break") {
       nextMode = "work";
-      setSecondsLeft(workMinutes * 60);
+      setSecondsLeft(Math.round(workMinutes) * 60);
       setCurrentRound(1);
     }
     setMode(nextMode);
@@ -55,7 +57,7 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
   }
 
   useEffect(() => {
-    setSecondsLeft(workMinutes * 60);
+    setSecondsLeft(Math.round(workMinutes) * 60);
   }, [workMinutes, breakMinutes, longBreakMinutes]);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
 
   const handleRestartButton = () => {
     setMode("work");
-    setSecondsLeft(workMinutes * 60);
+    setSecondsLeft(Math.round(workMinutes) * 60);
     setCurrentRound(1);
     setIsPaused(true);
   };
@@ -111,17 +113,17 @@ const Timer: React.FC<TimerProps> = ({ onSettingsButtonClick }) => {
         <CircularProgressbar
           value={
             (((mode === "work"
-              ? workMinutes
-              : mode === "break"
-              ? breakMinutes
-              : longBreakMinutes) *
+              ? Math.round(workMinutes)
+              : mode === "short break"
+              ? Math.round(breakMinutes)
+              : Math.round(longBreakMinutes)) *
               60 -
               secondsLeft) /
               ((mode === "work"
-                ? workMinutes
-                : mode === "break"
-                ? breakMinutes
-                : longBreakMinutes) *
+                ? Math.round(workMinutes)
+                : mode === "short break"
+                ? Math.round(breakMinutes)
+                : Math.round(longBreakMinutes)) *
                 60)) *
             100
           }
