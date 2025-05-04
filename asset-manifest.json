@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pomodoro-react/static/css/main.b5a9d91f.css",
-    "main.js": "/pomodoro-react/static/js/main.e16f85b4.js",
+    "main.js": "/pomodoro-react/static/js/main.f6324689.js",
     "static/js/453.ed3810f9.chunk.js": "/pomodoro-react/static/js/453.ed3810f9.chunk.js",
     "static/media/sound3.wav": "/pomodoro-react/static/media/sound3.58179c816cca07e2fec2.wav",
     "static/media/sound2.wav": "/pomodoro-react/static/media/sound2.7e3b4cec1ea193998233.wav",
@@ -9,11 +9,11 @@
     "static/media/sound1.wav": "/pomodoro-react/static/media/sound1.e4c9e84d7d4e28384a8e.wav",
     "index.html": "/pomodoro-react/index.html",
     "main.b5a9d91f.css.map": "/pomodoro-react/static/css/main.b5a9d91f.css.map",
-    "main.e16f85b4.js.map": "/pomodoro-react/static/js/main.e16f85b4.js.map",
+    "main.f6324689.js.map": "/pomodoro-react/static/js/main.f6324689.js.map",
     "453.ed3810f9.chunk.js.map": "/pomodoro-react/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b5a9d91f.css",
-    "static/js/main.e16f85b4.js"
+    "static/js/main.f6324689.js"
   ]
 }
